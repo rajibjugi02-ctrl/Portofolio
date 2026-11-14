@@ -1,0 +1,264 @@
+{
+  "profile": {
+    "name": "Muhammad Rajib Zahir",
+    "role": "Web Developer & Creative Designer",
+    "headline": "Harmoni Rekayasa Web Front-End, Desain Grafis & Kreatif Media Video",
+    "shortBio": "Saya adalah siswa SMK Negeri 1 Ciomas (PPLG) berusia 16 tahun dari Bogor yang aktif di bidang Front-End Web Development, Graphic Design (Canva & Figma), Video Editing (CapCut), serta Videography / Kameramen.",
+    "aboutParagraphs": [
+      "Sebagai siswa jurusan Pengembangan Perangkat Lunak dan Gim (PPLG) di SMK Negeri 1 Ciomas, saya memadukan kemampuan koding antarmuka web (HTML, CSS, JavaScript, PHP) dengan kreativitas visual yang dinamis.",
+      "Di luar pengembangan web, saya aktif memproduksi konten grafis melalui Canva dan Figma, mengedit video di CapCut (PC & Mobile), serta mengambil peran langsung di balik lensa sebagai kameramen dan videografer untuk berbagai proyek kreatif."
+    ],
+    "email": "rajibjugi02@gmail.com",
+    "location": "Bogor, Jawa Barat, Indonesia",
+    "status": "Tersedia untuk Kolaborasi & Proyek",
+    "biodata": {
+      "fullName": "Muhammad Rajib Zahir",
+      "age": "16 Tahun",
+      "school": "SMK Negeri 1 Ciomas",
+      "major": "PPLG (Pengembangan Perangkat Lunak dan Gim)",
+      "domicile": "Bogor, Jawa Barat, Indonesia",
+      "focus": "Graphic Design, Video Editing, Web Development (Front-End), & Videography / Kameramen"
+    },
+    "stats": [
+      { "label": "Tahun Eksplorasi", "value": "2+" },
+      { "label": "Proyek Web Live", "value": "3" },
+      { "label": "Karya Desain Canva", "value": "7+" },
+      { "label": "Dedikasi Belajar", "value": "100%" }
+    ],
+    "socials": {
+      "email": "mailto:rajibjugi02@gmail.com",
+      "github": "https://github.com/rajibjugi02-ctrl",
+      "instagram": "https://instagram.com/zaestraa",
+      "canva": "mailto:zaraaraya5@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/rajib-zahir-9116b9381/"
+    },
+    "contact": {
+      "primaryEmail": {
+        "label": "Email Utama",
+        "value": "rajibjugi02@gmail.com",
+        "href": "mailto:rajibjugi02@gmail.com"
+      },
+      "canvaEmail": {
+        "label": "Canva / Email Desain",
+        "value": "zaraaraya5@gmail.com",
+        "href": "mailto:zaraaraya5@gmail.com"
+      },
+      "github": {
+        "label": "GitHub",
+        "username": "rajibjugi02-ctrl",
+        "display": "github.com/rajibjugi02-ctrl",
+        "href": "https://github.com/rajibjugi02-ctrl"
+      },
+      "instagram": {
+        "label": "Instagram",
+        "username": "@zaestraa",
+        "display": "instagram.com/zaestraa",
+        "href": "https://instagram.com/zaestraa"
+      },
+      "linkedin": {
+        "label": "LinkedIn",
+        "username": "Muhammad Rajib Zahir",
+        "display": "linkedin.com/in/rajib-zahir-9116b9381",
+        "href": "https://www.linkedin.com/in/rajib-zahir-9116b9381/"
+      }
+    }
+  },
+  "skills": {
+    "coreCompetencies": [
+      { "name": "TypeScript", "category": "Web Development" },
+      { "name": "Next.js", "category": "Web Development" },
+      { "name": "Tailwind CSS", "category": "Web Development" },
+      { "name": "Supabase", "category": "Backend & Database" },
+      { "name": "REST API Integration", "category": "Web Development" },
+      { "name": "HTML5 & CSS3", "category": "Web Development" },
+      { "name": "JavaScript", "category": "Web Development" },
+      { "name": "PHP", "category": "Web Development" },
+      { "name": "Git & GitHub", "category": "Workflow" },
+      { "name": "Vercel Deployment", "category": "Workflow" },
+      { "name": "Front-End Web Development", "category": "Web Development" },
+      { "name": "Canva Graphic Design", "category": "Design & Visual" },
+      { "name": "Figma UI/UX Design", "category": "Design & Visual" },
+      { "name": "CapCut Video Editing (PC & Mobile)", "category": "Video & Multimedia" },
+      { "name": "Kameramen & Videography", "category": "Video & Multimedia" },
+      { "name": "Visual Storytelling & Media Kreatif", "category": "Creative Media" }
+    ],
+    "softSkills": [
+      "Visual Storytelling & Komunikasi Kreatif",
+      "Pengambilan Sudut Kamera & Framing",
+      "Ketelitian Desain & Pixel-Perfect",
+      "Pemecahan Masalah Koding",
+      "Semangat Belajar Cepat & Adaptif"
+    ]
+  },
+  "webProjects": [
+    {
+      "id": "web-1",
+      "title": "Musickus",
+      "category": "Multi-API Music Streaming & Lyrics Platform",
+      "domain": "musickus.vercel.app",
+      "description": "Aplikasi web eksplorasi dan pemutar musik modern berbasis Next.js & TypeScript yang mengintegrasikan berbagai layanan API musik global serta sinkronisasi lirik secara real-time.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "Spotify API",
+        "iTunes API",
+        "JioSaavn API",
+        "YouTube Music API",
+        "LRCLIB API",
+        "Vercel"
+      ],
+      "liveUrl": "https://musickus.vercel.app/",
+      "mockupImage": "https://api.microlink.io/?url=https://musickus.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
+    },
+    {
+      "id": "web-2",
+      "title": "Webkelas",
+      "category": "Full-Stack Class Portal & Database System",
+      "domain": "webkelas-virid.vercel.app",
+      "description": "Platform digital manajemen informasi dan profil kelas modern yang didukung database real-time Supabase untuk mengelola struktur anggota, jadwal, serta galeri kegiatan.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "Supabase",
+        "Tailwind CSS",
+        "Vercel"
+      ],
+      "liveUrl": "https://webkelas-virid.vercel.app/",
+      "mockupImage": "https://api.microlink.io/?url=https://webkelas-virid.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
+    },
+    {
+      "id": "web-3",
+      "title": "WebRoa (Roangkasa)",
+      "category": "Dynamic Community & Space Platform",
+      "domain": "roangkasa.vercel.app",
+      "description": "Website komunitas interaktif yang dibangun menggunakan arsitektur Next.js dan TypeScript dengan integrasi backend Supabase serta tata letak responsif berbasis Tailwind CSS.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "Supabase",
+        "Vercel"
+      ],
+      "liveUrl": "https://roangkasa.vercel.app/",
+      "mockupImage": "https://api.microlink.io/?url=https://roangkasa.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
+    }
+  ],
+  "designProjects": [
+    {
+      "id": "design-1",
+      "img": "/images/designs/hari-pahlawan.png",
+      "width": 1080,
+      "height": 1920,
+      "category": "Poster Peringatan • OSIS SKANIC",
+      "title": "Selamat Hari Pahlawan Nasional — 10 November",
+      "description": "Desain poster publikasi Instagram Story OSIS SMK Negeri 1 Ciomas dengan komposisi tekstur grunge merah-putih dan tipografi tegas yang heroik."
+    },
+    {
+      "id": "design-2",
+      "img": "/images/designs/hari-ayah.png",
+      "width": 1080,
+      "height": 1920,
+      "category": "Poster Publikasi • OSIS SKANIC",
+      "title": "Memperingati Hari Ayah Nasional — 12 November",
+      "description": "Karya komunikasi visual bertema hangat dengan gradasi biru lembut, tata letak tipografi serif editorial, dan pesan apresiasi yang menyentuh."
+    },
+    {
+      "id": "design-3",
+      "img": "/images/designs/hari-santri.png",
+      "width": 1080,
+      "height": 1920,
+      "category": "Poster Hari Besar • OSIS SKANIC",
+      "title": "Selamat Hari Santri Nasional — 22 Oktober",
+      "description": "Desain poster vertikal memadukan pencahayaan dramatis, perpaduan font script & sans-serif modern, serta pesan harmoni agama dan nasionalisme."
+    },
+    {
+      "id": "design-4",
+      "img": "/images/designs/lucky-girl-poster.png",
+      "width": 1080,
+      "height": 1350,
+      "category": "Creative Poster & Graphic Art",
+      "title": "The Best Lucky Girl — Grunge & Chromatic Poster",
+      "description": "Eksplorasi desain grafis bergaya brutalism/grunge tekstur spray-paint dengan efek bayangan RGB berlapis (chromatic motion) dan kolase visual modern."
+    },
+    {
+      "id": "design-5",
+      "img": "/images/designs/setiap-hari-adalah.png",
+      "width": 1080,
+      "height": 1350,
+      "category": "Photography & Visual Quote",
+      "title": "Setiap Hari Adalah Kesempatan Baru",
+      "description": "Hasil bidikan kameramen (videography/photography) kegiatan amanat pembina di SMK Negeri 1 Ciomas yang dipadukan dengan color grading hangat dan tipografi motivasi."
+    },
+    {
+      "id": "design-6",
+      "img": "/images/designs/kilas-balik.png",
+      "width": 1080,
+      "height": 1350,
+      "category": "Photography & Microblog Feed",
+      "title": "Kilas Balik — Momen Berharga Sekolah",
+      "description": "Karya fotografi potret dengan efek depth-of-field (bokeh) tajam dan penataan teks melengkung (curved typography) untuk konten dokumentasi Instagram."
+    },
+    {
+      "id": "design-7",
+      "img": "/images/designs/segala-hal-kuupayakan.png",
+      "width": 1080,
+      "height": 1350,
+      "category": "Event Photography & Editing",
+      "title": "Segala Hal Kuupayakan — Dokumentasi Lapangan",
+      "description": "Pengambilan momen ekspresif di lapangan upacara SMK Negeri 1 Ciomas lengkap dengan color grading sinematik dan tipografi ekspresif."
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp-1",
+      "category": "Organisasi & Media Kreatif",
+      "type": "organization",
+      "title": "Anggota Departemen 6 — KSIT (Komunikasi Sosial, Informasi, dan Teknologi)",
+      "organization": "OSIS SMK Negeri 1 Ciomas (OSIS SKANIC)",
+      "period": "2 Periode Kepengurusan",
+      "badge": "2 Periode ⭐",
+      "badgeColor": "bg-[#EBF1F5] text-[#4A6B82] border-[#D5E1EA]",
+      "description": "Menjalani dua periode di OSIS memberikan perubahan signifikan bagi diri saya—mulai dari penampilan, gaya komunikasi, hingga perilaku yang jauh lebih positif. Lingkungan yang sehat dan suportif ini membentuk kepercayaan diri saya serta memperluas relasi pertemanan.",
+      "highlights": [
+        "Mengelola dan menjaga tampilan serta konten media sosial Instagram resmi OSIS SKANIC.",
+        "Bertindak sebagai kameramen dan video editor untuk mendokumentasikan berbagai event serta kegiatan sekolah.",
+        "Merancang poster publikasi dan menyajikan desain informasi visual untuk kebutuhan pengumuman siswa."
+      ],
+      "tags": ["Social Media Management", "Videography", "Video Editing", "Graphic Design", "Public Speaking"]
+    },
+    {
+      "id": "exp-2",
+      "category": "Pendidikan & Adaptasi Keahlian",
+      "type": "education",
+      "title": "Siswa Jurusan PPLG (Pengembangan Perangkat Lunak dan Gim)",
+      "organization": "SMK Negeri 1 Ciomas",
+      "period": "Saat Ini",
+      "badge": "Siswa Aktif",
+      "badgeColor": "bg-[#EFF4F0] text-[#5C7A67] border-[#D6E3D8]",
+      "description": "Sebuah perjalanan penuh kejutan dan adaptasi. Meskipun PPLG awalnya bukan jurusan pilihan utama saya—karena minat awal saya sebenarnya lebih condong ke BCF (Broadcasting dan Perfilman)—saya memilih untuk tetap berkomitmen penuh, berusaha berkembang menjadi lebih baik, dan justru berhasil memadukan dunia pemrograman web (Front-End) dengan passion kreatif saya di bidang media dan desain.",
+      "highlights": [
+        "Mempelajari dan mempraktikkan pengembangan website Front-End menggunakan HTML, CSS, JavaScript, dan PHP.",
+        "Mengelola repositori kode menggunakan Git/GitHub serta melakukan deployment proyek ke Vercel.",
+        "Menggabungkan keahlian desain visual (Figma & Canva) ke dalam pembuatan antarmuka website."
+      ],
+      "tags": ["Front-End Dev", "HTML/CSS/JS", "PHP", "UI/UX Design", "Adaptability"]
+    },
+    {
+      "id": "exp-3",
+      "category": "Pencapaian & Kompetisi",
+      "type": "competition",
+      "title": "Juara 2 Turnamen Mobile Legends Tingkat Sekolah",
+      "organization": "Kompetisi E-Sports Antar Siswa — SMK Negeri 1 Ciomas",
+      "period": "Pencapaian Turnamen Perdana",
+      "badge": "Juara 2 🥈",
+      "badgeColor": "bg-[#FAF4ED] text-[#C27D38] border-[#F2E5D5]",
+      "description": "Pengalaman perdana mengikuti turnamen kompetitif bersama rekan satu tim di sekolah yang sangat seru dan berkesan. Berhasil meraih posisi Juara 2 pada percobaan pertama menjadi pencapaian yang membanggakan sekaligus melatih kekompakan tim.",
+      "highlights": [
+        "Membangun kerja sama tim (teamwork), komunikasi intensif, dan strategi permainan di bawah tekanan.",
+        "Meraih podium Juara 2 pada keikutsertaan turnamen perdana di lingkungan sekolah."
+      ],
+      "tags": ["Teamwork", "Strategy", "Competitive Mentality", "2nd Place Winner"]
+    }
+  ]
+}
