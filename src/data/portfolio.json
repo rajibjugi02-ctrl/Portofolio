@@ -20,16 +20,28 @@
       "focus": "Graphic Design, Video Editing, Web Development (Front-End), & Videography / Kameramen"
     },
     "stats": [
-      { "label": "Tahun Eksplorasi", "value": "2+" },
-      { "label": "Proyek Web Live", "value": "3" },
-      { "label": "Karya Desain Canva", "value": "7+" },
-      { "label": "Dedikasi Belajar", "value": "100%" }
+      {
+        "label": "Tahun Eksplorasi",
+        "value": "2+"
+      },
+      {
+        "label": "Proyek Web Live",
+        "value": "6"
+      },
+      {
+        "label": "Karya Desain Canva",
+        "value": "7+"
+      },
+      {
+        "label": "Dedikasi Belajar",
+        "value": "100%"
+      }
     ],
     "socials": {
       "email": "mailto:rajibjugi02@gmail.com",
       "github": "https://github.com/rajibjugi02-ctrl",
       "instagram": "https://instagram.com/zaestraa",
-      "canva": "mailto:zaraaraya5@gmail.com",
+      "canva": "mailto:rajibjugi02@gmail.com",
       "linkedin": "https://www.linkedin.com/in/rajib-zahir-9116b9381/"
     },
     "contact": {
@@ -40,8 +52,8 @@
       },
       "canvaEmail": {
         "label": "Canva / Email Desain",
-        "value": "zaraaraya5@gmail.com",
-        "href": "mailto:zaraaraya5@gmail.com"
+        "value": "rajibjugi02@gmail.com",
+        "href": "mailto:rajibjugi02@gmail.com"
       },
       "github": {
         "label": "GitHub",
@@ -65,22 +77,70 @@
   },
   "skills": {
     "coreCompetencies": [
-      { "name": "TypeScript", "category": "Web Development" },
-      { "name": "Next.js", "category": "Web Development" },
-      { "name": "Tailwind CSS", "category": "Web Development" },
-      { "name": "Supabase", "category": "Backend & Database" },
-      { "name": "REST API Integration", "category": "Web Development" },
-      { "name": "HTML5 & CSS3", "category": "Web Development" },
-      { "name": "JavaScript", "category": "Web Development" },
-      { "name": "PHP", "category": "Web Development" },
-      { "name": "Git & GitHub", "category": "Workflow" },
-      { "name": "Vercel Deployment", "category": "Workflow" },
-      { "name": "Front-End Web Development", "category": "Web Development" },
-      { "name": "Canva Graphic Design", "category": "Design & Visual" },
-      { "name": "Figma UI/UX Design", "category": "Design & Visual" },
-      { "name": "CapCut Video Editing (PC & Mobile)", "category": "Video & Multimedia" },
-      { "name": "Kameramen & Videography", "category": "Video & Multimedia" },
-      { "name": "Visual Storytelling & Media Kreatif", "category": "Creative Media" }
+      {
+        "name": "TypeScript",
+        "category": "Web Development"
+      },
+      {
+        "name": "Next.js",
+        "category": "Web Development"
+      },
+      {
+        "name": "Tailwind CSS",
+        "category": "Web Development"
+      },
+      {
+        "name": "Supabase",
+        "category": "Backend & Database"
+      },
+      {
+        "name": "REST API Integration",
+        "category": "Web Development"
+      },
+      {
+        "name": "HTML5 & CSS3",
+        "category": "Web Development"
+      },
+      {
+        "name": "JavaScript",
+        "category": "Web Development"
+      },
+      {
+        "name": "PHP",
+        "category": "Web Development"
+      },
+      {
+        "name": "Git & GitHub",
+        "category": "Workflow"
+      },
+      {
+        "name": "Vercel Deployment",
+        "category": "Workflow"
+      },
+      {
+        "name": "Front-End Web Development",
+        "category": "Web Development"
+      },
+      {
+        "name": "Canva Graphic Design",
+        "category": "Design & Visual"
+      },
+      {
+        "name": "Figma UI/UX Design",
+        "category": "Design & Visual"
+      },
+      {
+        "name": "CapCut Video Editing (PC & Mobile)",
+        "category": "Video & Multimedia"
+      },
+      {
+        "name": "Kameramen & Videography",
+        "category": "Video & Multimedia"
+      },
+      {
+        "name": "Visual Storytelling & Media Kreatif",
+        "category": "Creative Media"
+      }
     ],
     "softSkills": [
       "Visual Storytelling & Komunikasi Kreatif",
@@ -142,6 +202,54 @@
       ],
       "liveUrl": "https://roangkasa.vercel.app/",
       "mockupImage": "https://api.microlink.io/?url=https://roangkasa.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
+    },
+    {
+      "id": "web-4",
+      "title": "UtilityHub",
+      "category": "Soft Neo-Brutalism Modern Utility Studio",
+      "domain": "utility-seven-chi.vercel.app",
+      "description": "Studio utilitas digital all-in-one dengan 26+ alat produktivitas interaktif bergaya Soft Neo-Brutalism, mencakup Media Downloader HD tanpa watermark, Audio/Video Studio, Image & PDF Processing, hingga Developer QR tools.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "Web Audio & Canvas API",
+        "PWA",
+        "Vercel"
+      ],
+      "liveUrl": "https://utility-seven-chi.vercel.app/",
+      "mockupImage": "https://api.microlink.io/?url=https://utility-seven-chi.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
+    },
+    {
+      "id": "web-5",
+      "title": "Shin Eun-soo Tribute",
+      "category": "Cozy Pastel Scrapbook & Liquid Glass Tribute",
+      "domain": "actress-three.vercel.app",
+      "description": "Website tribute interaktif untuk aktris Korea Selatan Shin Eun-soo (신은수) dengan konsep visual Cozy Pastel Scrapbook & Liquid Glass, menampilkan biodata profil, penghargaan, galeri poster drama, dan linimasa karya.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "Liquid Glass UI",
+        "Vercel"
+      ],
+      "liveUrl": "https://actress-three.vercel.app/",
+      "mockupImage": "https://api.microlink.io/?url=https://actress-three.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
+    },
+    {
+      "id": "web-6",
+      "title": "Aetheria",
+      "category": "Official OSIS Showcase & Creative Identity",
+      "domain": "aetheria-taupe-delta.vercel.app",
+      "description": "Platform perkenalan resmi identitas logo AETHERIA — OSKA 2026/2027 SMK Negeri 1 Ciomas dengan arsitektur web modern, visual interaktif, dan tagline 'Rise Beyond The Ordinary'.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "Vercel"
+      ],
+      "liveUrl": "https://aetheria-taupe-delta.vercel.app/",
+      "mockupImage": "https://api.microlink.io/?url=https://aetheria-taupe-delta.vercel.app/&screenshot=true&meta=false&embed=screenshot.url"
     }
   ],
   "designProjects": [
@@ -225,7 +333,13 @@
         "Bertindak sebagai kameramen dan video editor untuk mendokumentasikan berbagai event serta kegiatan sekolah.",
         "Merancang poster publikasi dan menyajikan desain informasi visual untuk kebutuhan pengumuman siswa."
       ],
-      "tags": ["Social Media Management", "Videography", "Video Editing", "Graphic Design", "Public Speaking"]
+      "tags": [
+        "Social Media Management",
+        "Videography",
+        "Video Editing",
+        "Graphic Design",
+        "Public Speaking"
+      ]
     },
     {
       "id": "exp-2",
@@ -242,7 +356,13 @@
         "Mengelola repositori kode menggunakan Git/GitHub serta melakukan deployment proyek ke Vercel.",
         "Menggabungkan keahlian desain visual (Figma & Canva) ke dalam pembuatan antarmuka website."
       ],
-      "tags": ["Front-End Dev", "HTML/CSS/JS", "PHP", "UI/UX Design", "Adaptability"]
+      "tags": [
+        "Front-End Dev",
+        "HTML/CSS/JS",
+        "PHP",
+        "UI/UX Design",
+        "Adaptability"
+      ]
     },
     {
       "id": "exp-3",
@@ -258,7 +378,12 @@
         "Membangun kerja sama tim (teamwork), komunikasi intensif, dan strategi permainan di bawah tekanan.",
         "Meraih podium Juara 2 pada keikutsertaan turnamen perdana di lingkungan sekolah."
       ],
-      "tags": ["Teamwork", "Strategy", "Competitive Mentality", "2nd Place Winner"]
+      "tags": [
+        "Teamwork",
+        "Strategy",
+        "Competitive Mentality",
+        "2nd Place Winner"
+      ]
     }
   ]
 }

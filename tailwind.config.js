@@ -7,28 +7,51 @@ export default {
   theme: {
     extend: {
       colors: {
-        bgPrimary: '#F9F9F9',
-        borderSubtle: '#EAEAEA',
-        textPrimary: '#1A1A1A',
-        textSecondary: '#666666',
-        slateBlue: {
-          DEFAULT: '#4A6B82',
-          hover: '#3D586C',
-          light: '#EBF1F5',
+        paper: '#F7F6F2',
+        surface: '#FFFFFF',
+        stone: {
+          DEFAULT: '#EFECE6',
+          light: '#F4F2ED',
+          dark: '#E2DDD4',
         },
-        sageGreen: {
-          DEFAULT: '#5C7A67',
-          hover: '#4C6655',
-          light: '#EFF4F0',
+        charcoal: {
+          DEFAULT: '#1C1B19',
+          light: '#2D2B27',
+          border: '#1C1B19',
+        },
+        mutedSlate: '#5E5C56',
+        cobalt: {
+          DEFAULT: '#2E5BFF',
+          hover: '#1B47EB',
+          light: '#EBF0FF',
+        },
+        sage: {
+          DEFAULT: '#3D7A5A',
+          hover: '#316348',
+          light: '#EDF5F0',
+        },
+        terracotta: {
+          DEFAULT: '#D95D39',
+          hover: '#BF4E2D',
+          light: '#FDF1ED',
         },
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        pixel: ['"Pixelify Sans"', '"Silkscreen"', 'monospace'],
+        silkscreen: ['"Silkscreen"', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       boxShadow: {
-        'soft-sm': '0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03)',
-        'soft-md': '0 8px 24px -4px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.03)',
-        'soft-lg': '0 16px 32px -6px rgba(0, 0, 0, 0.08), 0 8px 16px -4px rgba(0, 0, 0, 0.04)',
+        'pixel': '4px 4px 0px 0px #1C1B19',
+        'pixel-sm': '2px 2px 0px 0px #1C1B19',
+        'pixel-lg': '6px 6px 0px 0px #1C1B19',
+        'pixel-xl': '8px 8px 0px 0px #1C1B19',
+        'pixel-cobalt': '4px 4px 0px 0px #2E5BFF',
+        'pixel-white': '4px 4px 0px 0px #FFFFFF',
+      },
+      borderRadius: {
+        'none': '0px',
       },
     },
   },

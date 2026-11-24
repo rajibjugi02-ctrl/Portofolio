@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { 
-  HiMenuAlt3, 
-  HiX, 
   HiArrowSmRight, 
   HiChevronRight, 
   HiOutlineMail 
 } from 'react-icons/hi';
 import { SiGithub, SiInstagram } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa6';
+import { motion, AnimatePresence } from 'motion/react';
+import { useLenis } from '../../context/LenisContext';
 import portfolioData from '../../data/portfolio.json';
 
 const NAV_ITEMS = [
   { label: 'Beranda', href: '#hero' },
-  { label: 'Tentang Saya', href: '#about' },
+  { label: 'Tentang', href: '#about' },
   { label: 'Proyek Web', href: '#web-projects' },
   { label: 'Desain Canva', href: '#design-showcase' },
   { label: 'Pengalaman', href: '#experience' },
@@ -23,11 +23,11 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { profile } = portfolioData;
+  const lenis = useLenis();
 
-  // Active section detection with balanced threshold
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 40);
 
       const sections = ['hero', 'about', 'web-projects', 'design-showcase', 'experience', 'contact'];
       const scrollPosition = window.scrollY + 220;
@@ -49,14 +49,29 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Silky smooth scroll with dynamic navbar offset
   const scrollToTarget = (href) => {
-    const target = document.querySelector(href);
-    if (target) {
-      const navOffset = window.innerWidth < 768 ? 76 : 96;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+    if (href === '#hero') {
+      if (lenis) {
+        lenis.scrollTo('#hero', {
+          duration: 1.25,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
 
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const navOffset = window.innerWidth < 768 ? -76 : -96;
+
+    if (lenis) {
+      lenis.scrollTo(target, { offset: navOffset, duration: 1.15 });
+    } else {
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset + navOffset;
       window.scrollTo({
         top: Math.max(0, offsetPosition),
         behavior: 'smooth'
@@ -71,7 +86,6 @@ export default function Navbar() {
     scrollToTarget(href);
   };
 
-  // Close mobile menu on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && mobileMenuOpen) {
@@ -84,193 +98,217 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ================= DESKTOP FLOATING PILL NAVBAR ================= */}
-      <header className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 w-auto max-w-fit transition-all duration-300 pointer-events-auto">
+      {/* ================= DESKTOP PIXEL FLOATING NAVBAR ================= */}
+      <header className="hidden md:block fixed top-5 left-1/2 -translate-x-1/2 z-50 w-auto max-w-fit transition-all duration-200 pointer-events-auto">
         <nav
-          className={`flex items-center gap-6 px-5 py-2.5 rounded-full bg-white/85 backdrop-blur-xl border border-neutral-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 ${
-            scrolled ? 'bg-white/95 shadow-[0_12px_36px_rgb(0,0,0,0.09)] border-neutral-300/90' : ''
+          className={`flex items-center gap-5 border-2 border-[#1C1B19] rounded-none transition-all duration-300 ease-out ${
+            scrolled
+              ? 'px-4 py-2 bg-[#FFFFFF] shadow-[5px_5px_0px_0px_#1C1B19]'
+              : 'px-5 py-2.5 bg-[#FFFFFF] shadow-[3px_3px_0px_0px_#1C1B19]'
           }`}
           aria-label="Navigasi Utama"
         >
-          {/* Logo / Brand Name - Strict single line */}
+          {/* Logo / Brand Name Pixel */}
           <a
             href="#hero"
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="group flex items-center gap-2.5 text-[#1A1A1A] font-bold tracking-tight text-sm pr-3 border-r border-[#EAEAEA] whitespace-nowrap select-none"
+            className="group flex items-center gap-2.5 text-[#1C1B19] font-pixel text-base font-bold pr-3 border-r-2 border-[#1C1B19] whitespace-nowrap select-none"
           >
-            <span className="w-7 h-7 rounded-full bg-[#4A6B82] text-white flex items-center justify-center text-xs font-bold shadow-sm transition-transform group-hover:scale-105 flex-shrink-0">
+            <span className="w-6 h-6 bg-[#2E5BFF] text-white border border-[#1C1B19] flex items-center justify-center text-xs font-mono font-bold shadow-[2px_2px_0px_0px_#1C1B19] transition-transform group-hover:-translate-y-0.5">
               RZ
             </span>
-            <span className="group-hover:text-[#4A6B82] transition-colors whitespace-nowrap">
+            <span className="group-hover:text-[#2E5BFF] transition-colors tracking-wide">
               Rajib Zahir
             </span>
           </a>
 
-          {/* Navigation Links with Smooth Active Pill Transition */}
+          {/* Navigation Links with Motion Sliding Pill Indicator */}
           <ul className="flex items-center gap-1 list-none m-0 p-0 whitespace-nowrap">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.href.replace('#', '');
               return (
-                <li key={item.href} className="inline-block whitespace-nowrap">
+                <li key={item.href} className="relative inline-block whitespace-nowrap">
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`inline-block px-3.5 py-1.5 rounded-full text-xs whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    className={`relative z-10 inline-block px-3 py-1 font-pixel text-xs tracking-wider uppercase transition-colors duration-150 ${
                       isActive
-                        ? 'bg-[#1A1A1A] text-white shadow-sm font-semibold scale-100'
-                        : 'text-[#666666] hover:text-[#1A1A1A] hover:bg-neutral-100 font-medium'
+                        ? 'text-white font-bold'
+                        : 'text-[#5E5C56] hover:text-[#1C1B19]'
                     }`}
                   >
                     {item.label}
                   </a>
+
+                  {/* Physics-Based Sliding Active Pill */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavPill"
+                      className="absolute inset-0 bg-[#1C1B19] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#2E5BFF] z-0 pointer-events-none"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </li>
               );
             })}
           </ul>
 
-          {/* Contact CTA */}
-          <div className="pl-3 border-l border-[#EAEAEA] flex items-center whitespace-nowrap">
+          {/* Contact CTA Tactile Button */}
+          <div className="pl-3 border-l-2 border-[#1C1B19] flex items-center whitespace-nowrap">
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-[#4A6B82] hover:bg-[#3D586C] whitespace-nowrap transition-all duration-200 shadow-sm active:scale-95 group"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 font-pixel text-xs font-bold uppercase tracking-wider text-white bg-[#2E5BFF] hover:bg-[#1B47EB] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             >
               <span>Hubungi</span>
-              <HiArrowSmRight className="w-3.5 h-3.5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
+              <HiArrowSmRight className="w-3.5 h-3.5 flex-shrink-0" />
             </a>
           </div>
         </nav>
       </header>
 
-      {/* ================= MOBILE FLOATING NAVBAR & ENHANCED POPOVER ================= */}
-      {/* Dimmed Blur Backdrop for Mobile Menu (Tap outside to close) */}
-      <div
-        className={`fixed inset-0 bg-neutral-950/35 backdrop-blur-sm z-40 transition-all duration-300 md:hidden ${
-          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setMobileMenuOpen(false)}
-        aria-hidden="true"
-      />
+      {/* ================= MOBILE FLOATING NAVBAR ================= */}
+      {/* Dimmed Backdrop with AnimatePresence */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-[#1C1B19]/50 backdrop-blur-[2px] z-40 md:hidden pointer-events-auto"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
 
-      <div className="md:hidden fixed top-4 right-4 left-4 z-50 flex flex-col pointer-events-none">
-        {/* Floating Top Capsule Bar */}
-        <div className="w-full flex items-center justify-between pointer-events-auto px-4 py-2.5 rounded-full bg-white/90 backdrop-blur-xl border border-neutral-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+      <div className="md:hidden fixed top-3 right-3 left-3 z-50 flex flex-col pointer-events-none">
+        {/* Floating Top Bar */}
+        <div className="w-full flex items-center justify-between pointer-events-auto px-3.5 py-2 bg-[#FFFFFF] border-2 border-[#1C1B19] shadow-[4px_4px_0px_0px_#1C1B19] rounded-none">
           <a
             href="#hero"
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="flex items-center gap-2 text-xs font-bold text-[#1A1A1A] whitespace-nowrap select-none"
+            className="flex items-center gap-2 font-pixel text-sm font-bold text-[#1C1B19] whitespace-nowrap select-none"
           >
-            <span className="w-6 h-6 rounded-full bg-[#4A6B82] text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0 shadow-sm">
+            <span className="w-6 h-6 bg-[#2E5BFF] text-white border border-[#1C1B19] flex items-center justify-center text-[10px] font-mono font-bold shadow-[1px_1px_0px_0px_#1C1B19]">
               RZ
             </span>
-            <span className="whitespace-nowrap">Rajib Zahir</span>
+            <span className="tracking-wide">Rajib Zahir</span>
           </a>
 
-          {/* Animated Toggle Hamburger / Close Button */}
+          {/* Animated Hamburger Morph Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 ${
-              mobileMenuOpen
-                ? 'bg-neutral-900 text-white rotate-90 shadow-md'
-                : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rotate-0'
-            }`}
+            className="w-8 h-8 border-2 border-[#1C1B19] bg-[#FFFFFF] shadow-[2px_2px_0px_0px_#1C1B19] flex flex-col items-center justify-center gap-1 p-1 transition-colors active:translate-x-[1px] active:translate-y-[1px]"
             aria-label={mobileMenuOpen ? 'Tutup Menu' : 'Buka Menu'}
           >
-            {mobileMenuOpen ? <HiX className="w-4 h-4" /> : <HiMenuAlt3 className="w-4 h-4" />}
+            <motion.span
+              animate={mobileMenuOpen ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="w-4 h-0.5 bg-[#1C1B19] block origin-center"
+            />
+            <motion.span
+              animate={mobileMenuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              className="w-4 h-0.5 bg-[#1C1B19] block origin-center"
+            />
+            <motion.span
+              animate={mobileMenuOpen ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="w-4 h-0.5 bg-[#1C1B19] block origin-center"
+            />
           </button>
         </div>
 
-        {/* Floating Mobile Popover Menu Card with Smooth Spring Transitions */}
-        <div
-          className={`w-full mt-2.5 p-3.5 sm:p-4 rounded-3xl bg-white/95 backdrop-blur-2xl border border-neutral-200/90 shadow-[0_24px_60px_rgba(0,0,0,0.15)] pointer-events-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] transform origin-top select-none ${
-            mobileMenuOpen
-              ? 'opacity-100 translate-y-0 scale-100 visible'
-              : 'opacity-0 -translate-y-3 scale-95 invisible pointer-events-none'
-          }`}
-        >
-          <div className="flex flex-col gap-1.5">
-            {NAV_ITEMS.map((item, index) => {
-              const isActive = activeSection === item.href.replace('#', '');
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  style={{
-                    transitionDelay: mobileMenuOpen ? `${index * 30}ms` : '0ms'
-                  }}
-                  className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium whitespace-nowrap transition-all duration-200 active:scale-[0.98] ${
-                    isActive
-                      ? 'bg-[#1A1A1A] text-white font-semibold shadow-sm'
-                      : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100/80 active:bg-neutral-100'
-                  }`}
-                >
-                  <span className="whitespace-nowrap">{item.label}</span>
-                  {isActive ? (
-                    <span className="w-1.5 h-1.5 rounded-full bg-white flex-shrink-0 animate-pulse" />
-                  ) : (
-                    <HiChevronRight className="w-4 h-4 text-neutral-300" />
-                  )}
-                </a>
-              );
-            })}
+        {/* Floating Mobile Popover Menu Card with AnimatePresence Spring Morph */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+              className="w-full mt-2 p-3.5 bg-[#FFFFFF] border-2 border-[#1C1B19] shadow-[6px_6px_0px_0px_#1C1B19] rounded-none pointer-events-auto origin-top select-none"
+            >
+              <div className="flex flex-col gap-1.5">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = activeSection === item.href.replace('#', '');
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={(e) => handleNavClick(e, item.href)}
+                      className={`flex items-center justify-between px-3.5 py-2.5 font-pixel text-xs tracking-wider uppercase border-2 transition-all duration-100 ${
+                        isActive
+                          ? 'bg-[#1C1B19] text-white border-[#1C1B19] shadow-[2px_2px_0px_0px_#2E5BFF]'
+                          : 'border-[#1C1B19] text-[#1C1B19] bg-[#F7F6F2] hover:bg-[#EFECE6]'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      {isActive ? (
+                        <span className="w-2 h-2 bg-[#2E5BFF] border border-white" />
+                      ) : (
+                        <HiChevronRight className="w-4 h-4 text-[#5E5C56]" />
+                      )}
+                    </a>
+                  );
+                })}
 
-            {/* Bottom Actions & Contact CTA */}
-            <div className="pt-2.5 mt-1 border-t border-neutral-100 flex flex-col gap-2.5">
-              <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, '#contact')}
-                className="w-full text-center py-3.5 px-4 rounded-2xl text-sm font-semibold text-white bg-[#4A6B82] hover:bg-[#3D586C] shadow-sm active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2 group"
-              >
-                <span>Hubungi Sekarang</span>
-                <HiArrowSmRight className="w-4 h-4 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-              </a>
+                {/* Bottom Actions */}
+                <div className="pt-2 mt-1 border-t-2 border-[#1C1B19] flex flex-col gap-2">
+                  <a
+                    href="#contact"
+                    onClick={(e) => handleNavClick(e, '#contact')}
+                    className="w-full text-center py-2.5 px-4 font-pixel text-xs font-bold uppercase tracking-wider text-white bg-[#2E5BFF] hover:bg-[#1B47EB] border-2 border-[#1C1B19] shadow-[3px_3px_0px_0px_#1C1B19] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2"
+                  >
+                    <span>Hubungi Sekarang</span>
+                    <HiArrowSmRight className="w-4 h-4" />
+                  </a>
 
-              {/* Quick Social Icons Row */}
-              <div className="flex items-center justify-center gap-3 pt-1 text-neutral-500">
-                <a
-                  href={`mailto:${profile?.email || 'rajibjugi02@gmail.com'}`}
-                  className="p-2 rounded-full hover:bg-neutral-100 hover:text-neutral-900 transition-colors"
-                  aria-label="Email"
-                  title="Email"
-                >
-                  <HiOutlineMail className="w-4 h-4" />
-                </a>
-                <a
-                  href={profile?.socials?.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2 rounded-full hover:bg-neutral-100 hover:text-neutral-900 transition-colors"
-                  aria-label="GitHub"
-                  title="GitHub"
-                >
-                  <SiGithub className="w-4 h-4" />
-                </a>
-                <a
-                  href={profile?.socials?.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2 rounded-full hover:bg-neutral-100 hover:text-[#0077B5] transition-colors"
-                  aria-label="LinkedIn"
-                  title="LinkedIn"
-                >
-                  <FaLinkedin className="w-4 h-4" />
-                </a>
-                <a
-                  href={profile?.socials?.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="p-2 rounded-full hover:bg-neutral-100 hover:text-[#E4405F] transition-colors"
-                  aria-label="Instagram"
-                  title="Instagram"
-                >
-                  <SiInstagram className="w-4 h-4" />
-                </a>
+                  {/* Social Icons Row */}
+                  <div className="flex items-center justify-center gap-2 pt-1 text-[#1C1B19]">
+                    <a
+                      href={`mailto:${profile?.email || 'rajibjugi02@gmail.com'}`}
+                      className="p-1.5 border border-[#1C1B19] bg-[#EFECE6] hover:bg-[#2E5BFF] hover:text-white transition-colors shadow-[1px_1px_0px_0px_#1C1B19]"
+                      aria-label="Email"
+                    >
+                      <HiOutlineMail className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={profile?.socials?.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1.5 border border-[#1C1B19] bg-[#EFECE6] hover:bg-[#1C1B19] hover:text-white transition-colors shadow-[1px_1px_0px_0px_#1C1B19]"
+                      aria-label="GitHub"
+                    >
+                      <SiGithub className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={profile?.socials?.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1.5 border border-[#1C1B19] bg-[#EFECE6] hover:bg-[#0077B5] hover:text-white transition-colors shadow-[1px_1px_0px_0px_#1C1B19]"
+                      aria-label="LinkedIn"
+                    >
+                      <FaLinkedin className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={profile?.socials?.instagram}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1.5 border border-[#1C1B19] bg-[#EFECE6] hover:bg-[#E4405F] hover:text-white transition-colors shadow-[1px_1px_0px_0px_#1C1B19]"
+                      aria-label="Instagram"
+                    >
+                      <SiInstagram className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

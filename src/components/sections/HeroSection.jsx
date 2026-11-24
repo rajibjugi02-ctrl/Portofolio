@@ -2,23 +2,24 @@ import { useState, useEffect } from 'react';
 import { HiArrowRight, HiCode, HiOutlineMail } from 'react-icons/hi';
 import { SiGithub, SiInstagram } from 'react-icons/si';
 import { FaLinkedin } from 'react-icons/fa6';
+import { motion } from 'motion/react';
 import { CanvaIcon } from '../ui/Icons';
-import CharacterPhoto from '../ui/CharacterPhoto';
+import PixelButton from '../ui/PixelButton';
+import PixelBadge from '../ui/PixelBadge';
+import PixelCard from '../ui/PixelCard';
+import SplitTextReveal from '../ui/SplitTextReveal';
+import HeroLiveProjectSpotlight from '../ui/HeroLiveProjectSpotlight';
+import { useLenis } from '../../context/LenisContext';
 import portfolioData from '../../data/portfolio.json';
-import useScrollReveal from '../../hooks/useScrollReveal';
 
-// Dynamic role titles for typewriter effect
 const ROLES = [
   'Web Developer & Creative Designer',
-  'Front-End Web Developer',
-  'Canva Graphic Designer',
+  'Front-End Web Developer (Next.js/React)',
+  'Canva & Figma Graphic Designer',
   'Video Editor & Videographer'
 ];
 
-/**
- * Animated number counter with smooth easeOutExpo curve
- */
-function CountUpNumber({ end = 0, suffix = '', duration = 1600 }) {
+function CountUpNumber({ end = 0, suffix = '', duration = 1400 }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -29,7 +30,6 @@ function CountUpNumber({ end = 0, suffix = '', duration = 1600 }) {
       if (!startTime) startTime = currentTime;
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Snappy easeOutExpo
       const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCount(Math.floor(ease * end));
 
@@ -53,34 +53,33 @@ function CountUpNumber({ end = 0, suffix = '', duration = 1600 }) {
 
 export default function HeroSection() {
   const { profile, webProjects = [], designProjects = [] } = portfolioData;
-  const revealRef = useScrollReveal();
+  const lenis = useLenis();
 
-  // Typewriter animation state for Role Title
   const [roleIndex, setRoleIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(90);
+  const [typingSpeed, setTypingSpeed] = useState(70);
 
   useEffect(() => {
-    const fullText = ROLES[roleIndex % ROLES.length];
+    const fullText = ROLES[roleIndex];
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
         setCurrentText(fullText.substring(0, currentText.length + 1));
-        setTypingSpeed(80);
-
         if (currentText.length + 1 === fullText.length) {
-          // Pause 2.2s after completing the full title
-          setTimeout(() => setIsDeleting(true), 2200);
+          setTypingSpeed(1800);
+          setIsDeleting(true);
+        } else {
+          setTypingSpeed(60);
         }
       } else {
         setCurrentText(fullText.substring(0, currentText.length - 1));
-        setTypingSpeed(35);
-
-        if (currentText.length === 0) {
+        if (currentText.length - 1 === 0) {
           setIsDeleting(false);
-          setRoleIndex((prev) => prev + 1);
-          setTypingSpeed(250);
+          setRoleIndex((prev) => (prev + 1) % ROLES.length);
+          setTypingSpeed(350);
+        } else {
+          setTypingSpeed(30);
         }
       }
     }, typingSpeed);
@@ -88,7 +87,6 @@ export default function HeroSection() {
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, roleIndex, typingSpeed]);
 
-  // Dynamic stats bound directly to data lengths
   const stats = [
     { label: 'Tahun Eksplorasi', end: 2, suffix: '+' },
     { label: 'Proyek Web Live', end: webProjects.length, suffix: '' },
@@ -96,172 +94,270 @@ export default function HeroSection() {
     { label: 'Dedikasi Belajar', end: 100, suffix: '%' },
   ];
 
-  // Silky smooth scroll with dynamic navbar offset
   const handleScrollToSection = (e, href) => {
     e.preventDefault();
+    if (href === '#hero') {
+      if (lenis) {
+        lenis.scrollTo('#hero', {
+          duration: 1.25,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
     const target = document.querySelector(href);
     if (target) {
-      const navOffset = window.innerWidth < 768 ? 76 : 96;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
-      window.scrollTo({
-        top: Math.max(0, offsetPosition),
-        behavior: 'smooth'
-      });
+      if (lenis) {
+        lenis.scrollTo(target, { offset: -96, duration: 1.15 });
+      } else {
+        const navOffset = window.innerWidth < 768 ? 76 : 96;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden scroll-mt-32"
+      className="relative min-h-screen flex flex-col justify-center pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden scroll-mt-28"
     >
-      {/* Background radial gradient accent */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-gradient-to-tr from-[#4A6B82]/8 via-[#5C7A67]/6 to-transparent blur-3xl pointer-events-none -z-10 rounded-full" />
-
-      {/* Main Wide Container (max-w-[1380px]) */}
-      <div 
-        ref={revealRef} 
-        className="max-w-[1380px] mx-auto px-4 sm:px-8 lg:px-12 w-full reveal-init"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div className="max-w-[1380px] mx-auto px-4 sm:px-8 lg:px-12 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          {/* Left Column (7 cols on lg): Typography, CTAs, & Stats */}
-          <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
+          {/* Left Column (7 cols): Retro-Modern Pixel Hero Typography with Smooth Settle Re-entry */}
+          <motion.div
+            initial={{ opacity: 0.85, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start"
+          >
             
-            {/* Main Name Heading */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#1A1A1A] tracking-tight leading-[1.08] mb-4">
-              {profile.name}
-            </h1>
+            {/* Pixel Status Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="inline-flex items-center gap-2 mb-4"
+            >
+              <PixelBadge variant="cobalt" size="md">
+                <span className="w-2 h-2 bg-[#2E5BFF] border border-[#1C1B19] animate-pulse" />
+                <span>ONLINE • SMK N 1 CIOMAS (PPLG)</span>
+              </PixelBadge>
+              <PixelBadge variant="stone" size="md">
+                <span>BOGOR, ID</span>
+              </PixelBadge>
+            </motion.div>
 
-            {/* Role Sub-heading with Typing Effect */}
-            <div className="inline-flex items-center min-h-[38px] sm:min-h-[44px] mb-6">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-[#4A6B82] via-[#2F4A5C] to-[#5C7A67] bg-clip-text text-transparent tracking-tight">
-                {currentText}
+            {/* GSAP Word-by-Word SplitTextReveal Headline */}
+            <SplitTextReveal
+              text="MUHAMMAD RAJIB ZAHIR"
+              as="h1"
+              className="font-pixel text-4xl sm:text-6xl lg:text-7xl font-bold text-[#1C1B19] tracking-tight uppercase mb-3 leading-[1.05]"
+              stagger={0.07}
+            />
+
+            {/* Role Typewriter Line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
+              className="inline-flex items-center gap-2 mb-6"
+            >
+              <span className="font-mono text-xs uppercase text-[#5E5C56] font-bold tracking-wider">
+                Peran:
               </span>
-              <span className="inline-block w-[3px] h-6 sm:h-8 bg-[#4A6B82] ml-1.5 rounded-full animate-pulse align-middle" />
-            </div>
+              <div className="font-mono text-xs sm:text-sm font-bold text-[#2E5BFF] bg-[#EBF0FF] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] px-2.5 py-1">
+                <span>{currentText}</span>
+                <span className="inline-block w-2 h-3.5 bg-[#2E5BFF] ml-0.5 align-middle animate-pulse" />
+              </div>
+            </motion.div>
 
-            {/* Sub-headline / Short Bio */}
-            <p className="text-base sm:text-lg text-[#666666] leading-relaxed max-w-2xl mb-9 font-normal">
+            {/* Authentic Bio */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.6 }}
+              className="font-sans text-base sm:text-lg text-[#5E5C56] leading-relaxed max-w-2xl mb-8 font-normal"
+            >
               {profile.shortBio}
-            </p>
+            </motion.p>
 
-            {/* Primary Action Buttons with Sliding Arrow Micro-Interaction */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-10 w-full sm:w-auto">
-              <a
-                href="#web-projects"
-                onClick={(e) => handleScrollToSection(e, '#web-projects')}
-                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-[#1A1A1A] text-white hover:bg-[#333333] font-semibold text-sm transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.18)] hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap cursor-pointer"
-              >
-                <HiCode className="w-4 h-4 text-[#61DAFB] flex-shrink-0" />
-                <span>Jelajahi Karya</span>
-                <HiArrowRight className="w-4 h-4 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all duration-200 flex-shrink-0" />
-              </a>
+            {/* Primary Action Tactile Buttons with Motion Micro-Interactions */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55, duration: 0.6 }}
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-9 w-full sm:w-auto"
+            >
+              <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98, x: 2, y: 2 }}>
+                <PixelButton
+                  variant="primary"
+                  size="md"
+                  href="#web-projects"
+                  onClick={(e) => handleScrollToSection(e, '#web-projects')}
+                  className="gap-2.5"
+                >
+                  <HiCode className="w-4 h-4 flex-shrink-0" />
+                  <span>Jelajahi Karya</span>
+                  <HiArrowRight className="w-4 h-4 flex-shrink-0" />
+                </PixelButton>
+              </motion.div>
 
-              <a
-                href="#about"
-                onClick={(e) => handleScrollToSection(e, '#about')}
-                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-[#1A1A1A] border border-neutral-200/90 hover:border-[#4A6B82] hover:bg-[#F9F9F9] font-semibold text-sm transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap cursor-pointer"
-              >
-                <span>Tentang Saya</span>
-                <HiArrowRight className="w-4 h-4 text-[#666666] group-hover:text-[#4A6B82] group-hover:translate-x-1 transition-all duration-200 flex-shrink-0" />
-              </a>
-            </div>
+              <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.98, x: 2, y: 2 }}>
+                <PixelButton
+                  variant="secondary"
+                  size="md"
+                  href="#about"
+                  onClick={(e) => handleScrollToSection(e, '#about')}
+                  className="gap-2"
+                >
+                  <span>Tentang Saya</span>
+                  <HiArrowRight className="w-4 h-4 text-[#5E5C56] flex-shrink-0" />
+                </PixelButton>
+              </motion.div>
+            </motion.div>
 
-            {/* Social Quick Connect */}
-            <div className="flex items-center gap-3 mb-10 text-[#666666]">
-              <span className="text-xs font-semibold text-[#888888] uppercase tracking-wider pr-1">
+            {/* Social Channels Row */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.65, duration: 0.6 }}
+              className="flex items-center gap-2.5 mb-9 text-[#1C1B19]"
+            >
+              <span className="font-mono text-xs font-bold text-[#5E5C56] uppercase tracking-wider pr-1">
                 Kanal:
               </span>
-              <a
+              <motion.a
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.95 }}
                 href={`mailto:${profile.email}`}
-                className="p-2.5 rounded-full bg-white hover:bg-neutral-100 text-[#1A1A1A] border border-neutral-200/80 shadow-sm hover:shadow transition-all"
-                aria-label="Kirim Email Langsung"
+                className="w-9 h-9 bg-[#FFFFFF] hover:bg-[#EFECE6] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] flex items-center justify-center text-[#1C1B19] transition-colors"
+                aria-label="Email"
                 title={profile.email}
               >
                 <HiOutlineMail className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.95 }}
                 href={profile.socials.github}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-full bg-white hover:bg-neutral-100 text-[#1A1A1A] border border-neutral-200/80 shadow-sm hover:shadow transition-all"
-                aria-label="GitHub Profile"
+                className="w-9 h-9 bg-[#FFFFFF] hover:bg-[#1C1B19] hover:text-white border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] flex items-center justify-center text-[#1C1B19] transition-colors"
+                aria-label="GitHub"
                 title="GitHub"
               >
                 <SiGithub className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.95 }}
                 href={profile.socials.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-full bg-white hover:bg-neutral-100 text-[#0077B5] border border-neutral-200/80 shadow-sm hover:shadow transition-all"
-                aria-label="LinkedIn Profile"
+                className="w-9 h-9 bg-[#FFFFFF] hover:bg-[#0077B5] hover:text-white border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] flex items-center justify-center text-[#1C1B19] transition-colors"
+                aria-label="LinkedIn"
                 title="LinkedIn"
               >
                 <FaLinkedin className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.95 }}
                 href={profile.socials.instagram}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-full bg-white hover:bg-neutral-100 text-[#E4405F] border border-neutral-200/80 shadow-sm hover:shadow transition-all"
-                aria-label="Instagram Profile"
+                className="w-9 h-9 bg-[#FFFFFF] hover:bg-[#E4405F] hover:text-white border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] flex items-center justify-center text-[#1C1B19] transition-colors"
+                aria-label="Instagram"
                 title="Instagram"
               >
                 <SiInstagram className="w-4 h-4" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.95 }}
                 href={profile.socials.canva}
-                className="p-2.5 rounded-full bg-white hover:bg-neutral-100 text-[#00C4CC] border border-neutral-200/80 shadow-sm hover:shadow transition-all"
-                aria-label="Canva Email"
-                title="Email Desain Canva"
+                className="w-9 h-9 bg-[#FFFFFF] hover:bg-[#00C4CC] hover:text-white border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] flex items-center justify-center text-[#1C1B19] transition-colors"
+                aria-label="Canva"
+                title="Canva"
               >
                 <CanvaIcon size={16} />
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
 
-            {/* Quick Stats Bar with Smooth Count Up Animation */}
-            <div className="w-full pt-6 border-t border-neutral-200/80">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center lg:text-left">
+            {/* Quick Stats Grid with Motion Stagger */}
+            <div className="w-full pt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center sm:text-left">
                 {stats.map((stat, i) => (
-                  <div key={i} className="flex flex-col">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-[#1A1A1A] tracking-tight">
-                      <CountUpNumber end={stat.end} suffix={stat.suffix} />
-                    </span>
-                    <span className="text-xs font-medium text-[#777777] tracking-tight">
-                      {stat.label}
-                    </span>
-                  </div>
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 260,
+                      damping: 26,
+                      delay: 0.6 + i * 0.08,
+                    }}
+                    whileHover={{ y: -3 }}
+                  >
+                    <PixelCard
+                      variant="white"
+                      shadowSize="sm"
+                      className="p-3 bg-white"
+                    >
+                      <span className="font-pixel text-2xl sm:text-3xl font-bold text-[#1C1B19] tracking-tight block">
+                        <CountUpNumber end={stat.end} suffix={stat.suffix} />
+                      </span>
+                      <span className="font-mono text-[11px] font-medium text-[#5E5C56] uppercase tracking-tight">
+                        {stat.label}
+                      </span>
+                    </PixelCard>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-          </div>
+          </motion.div>
 
-          {/* Right Column (5 cols on lg): Character Photo with Interactive 3D Frame */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <CharacterPhoto size="large" />
-          </div>
+          {/* Right Column (5 cols): Live Interactive Project Spotlight with Settle Re-entry */}
+          <motion.div
+            initial={{ opacity: 0.85, scale: 0.985, y: 14 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{
+              duration: 0.55,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="lg:col-span-5 flex flex-col items-center justify-center relative w-full"
+          >
+            <HeroLiveProjectSpotlight projects={webProjects} />
+          </motion.div>
 
         </div>
 
         {/* Subtle Visual Bridge / Scroll Down to About Section */}
-        <div className="w-full flex justify-center mt-12 sm:mt-16 pt-2">
-          <a
+        <div className="w-full flex justify-center mt-12 sm:mt-16">
+          <motion.a
+            whileHover={{ y: -3 }}
+            whileTap={{ scale: 0.96 }}
             href="#about"
             onClick={(e) => handleScrollToSection(e, '#about')}
-            className="group inline-flex flex-col items-center gap-2 text-xs font-medium text-neutral-400 hover:text-neutral-900 transition-colors cursor-pointer select-none"
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFFFFF] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] hover:bg-[#EFECE6] font-pixel text-xs uppercase tracking-wider select-none cursor-pointer"
             aria-label="Gulir ke Tentang Saya"
           >
-            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-neutral-400 group-hover:text-neutral-900 transition-colors">
-              Eksplorasi Profil
-            </span>
-            <div className="w-5 h-9 rounded-full border-2 border-neutral-300 group-hover:border-neutral-900 flex items-start justify-center p-1 transition-all duration-300 group-hover:translate-y-0.5">
-              <div className="w-1.5 h-2 rounded-full bg-neutral-400 group-hover:bg-neutral-900 animate-bounce transition-colors" />
-            </div>
-          </a>
+            <span className="text-[#1C1B19]">Eksplorasi Profil</span>
+            <span className="font-mono text-[#2E5BFF] font-bold animate-bounce">↓</span>
+          </motion.a>
         </div>
       </div>
     </section>

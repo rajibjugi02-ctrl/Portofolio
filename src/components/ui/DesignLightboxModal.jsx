@@ -1,31 +1,27 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { 
-  HiOutlineX, 
-  HiChevronLeft, 
+import {
+  HiOutlineX,
+  HiChevronLeft,
   HiChevronRight,
-  HiArrowLeft 
+  HiArrowLeft
 } from 'react-icons/hi';
+import { useLenis } from '../../context/LenisContext';
+import PixelButton from './PixelButton';
+import PixelBadge from './PixelBadge';
 
 /**
- * DesignLightboxModal Component
- * Ultra-Clean Modern Minimalist Lightbox:
- * - Pure, deep cinematic backdrop (bg-black/90 backdrop-blur-2xl)
- * - Sleek floating top pill (bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full)
- * - Prominent "Kembali" pill button & subtle close button with high contrast
- * - Refined typography in muted silver & white (no neon AI-slop colors)
- * - Centered artwork stage preserving native 9:16 or 4:5 ratios
- * - Minimalist floating navigation arrows
- * - Slender bottom caption card with subtle editorial metadata
+ * DesignLightboxModal - Modern Minimalist Pixel Art Lightbox
  */
 export default function DesignLightboxModal({
   isOpen = false,
   initialIndex = 0,
   items = [],
-  onClose = () => {}
+  onClose = () => { }
 }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const total = items.length;
+  const lenis = useLenis();
 
   useEffect(() => {
     if (isOpen) {
@@ -33,11 +29,11 @@ export default function DesignLightboxModal({
     }
   }, [isOpen, initialIndex]);
 
-  // Robust scroll lock cleanup
   useEffect(() => {
     if (!isOpen) {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
+      lenis?.start();
       return;
     }
 
@@ -46,23 +42,27 @@ export default function DesignLightboxModal({
 
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
+    lenis?.stop();
 
     return () => {
       document.body.style.overflow = prevBodyOverflow || '';
       document.documentElement.style.overflow = prevHtmlOverflow || '';
+      lenis?.start();
     };
-  }, [isOpen]);
+  }, [isOpen, lenis]);
 
   useEffect(() => {
     return () => {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
+      lenis?.start();
     };
-  }, []);
+  }, [lenis]);
 
   const handleClose = () => {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
+    lenis?.start();
     onClose();
   };
 
@@ -74,7 +74,6 @@ export default function DesignLightboxModal({
     setCurrentIndex((prev) => (prev < total - 1 ? prev + 1 : 0));
   };
 
-  // Keyboard controls
   useEffect(() => {
     if (!isOpen) return;
 
@@ -101,47 +100,47 @@ export default function DesignLightboxModal({
 
   const currentItem = items[currentIndex] || items[0];
   const isNineSixteen = currentItem.height === 1920 || (currentItem.height / currentItem.width > 1.5);
-  const aspectRatioText = isNineSixteen ? 'Rasio 9:16' : 'Rasio 4:5';
+  const aspectRatioText = isNineSixteen ? 'RASIO 9:16' : 'RASIO 4:5';
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 bg-black/90 backdrop-blur-2xl flex flex-col items-center justify-between p-4 sm:p-7 select-none animate-fade-in overflow-y-auto"
+      className="fixed inset-0 z-50 bg-[#1C1B19]/85 backdrop-blur-[3px] flex flex-col items-center justify-between p-3 sm:p-6 select-none animate-fade-in overflow-y-auto"
       onClick={handleClose}
       role="dialog"
       aria-modal="true"
       aria-label="Detail Karya Desain"
     >
-      {/* ================= MODERN MINIMALIST FLOATING HEADER ================= */}
+      {/* ================= MODERN PIXEL HEADER ================= */}
       <div
-        className="w-full max-w-2xl mx-auto bg-neutral-900/80 backdrop-blur-2xl border border-white/[0.12] rounded-full px-3 py-2 sm:px-4 sm:py-2.5 flex items-center justify-between gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.6)] z-50 animate-modal-in"
+        className="w-full max-w-2xl mx-auto bg-[#FFFFFF] border-2 border-[#1C1B19] shadow-[4px_4px_0px_0px_#1C1B19] px-3.5 py-2 flex items-center justify-between gap-3 z-50 animate-modal-in"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Prominent High-Contrast "Kembali" Button */}
+        {/* Prominent Tactile "Kembali" Button */}
         <button
           type="button"
           onClick={handleClose}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-neutral-950 hover:bg-neutral-200 font-semibold text-xs transition-all duration-200 active:scale-95 shadow-sm flex-shrink-0"
+          className="inline-flex items-center gap-1.5 px-3 py-1 font-pixel text-xs font-bold uppercase tracking-wider text-white bg-[#2E5BFF] hover:bg-[#1B47EB] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all flex-shrink-0"
           aria-label="Kembali ke Galeri"
         >
           <HiArrowLeft className="w-3.5 h-3.5" />
           <span>Kembali</span>
         </button>
 
-        {/* Clean Minimalist Typography (No Neon Badges) */}
+        {/* Pixel Category & Title */}
         <div className="flex-1 flex flex-col items-center min-w-0 px-2 text-center">
-          <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-neutral-400 truncate max-w-full">
+          <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-[#2E5BFF] truncate max-w-full">
             {currentItem.category}
           </span>
-          <h3 className="text-white font-medium text-xs sm:text-sm tracking-tight truncate max-w-full">
+          <h3 className="font-pixel text-xs sm:text-sm font-bold text-[#1C1B19] uppercase tracking-tight truncate max-w-full">
             {currentItem.title}
           </h3>
         </div>
 
-        {/* Clean Close [X] Button */}
+        {/* Pixel Close [X] Button */}
         <button
           type="button"
           onClick={handleClose}
-          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white text-neutral-200 hover:text-neutral-950 flex items-center justify-center transition-all duration-200 active:scale-95 border border-white/10 flex-shrink-0"
+          className="w-7 h-7 bg-[#EFECE6] hover:bg-[#D95D39] hover:text-white text-[#1C1B19] border-2 border-[#1C1B19] shadow-[2px_2px_0px_0px_#1C1B19] flex items-center justify-center transition-all active:translate-x-[1px] active:translate-y-[1px] flex-shrink-0"
           aria-label="Tutup Detail"
           title="Tutup (Esc)"
         >
@@ -149,9 +148,9 @@ export default function DesignLightboxModal({
         </button>
       </div>
 
-      {/* ================= CENTER ARTWORK STAGE & FLOATING ARROWS ================= */}
+      {/* ================= CENTER ARTWORK STAGE & ARROWS ================= */}
       <div
-        className="flex-1 flex items-center justify-center relative w-full max-w-4xl my-3 sm:my-4"
+        className="flex-1 flex items-center justify-center relative w-full max-w-4xl my-3"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Left Arrow Button */}
@@ -161,17 +160,17 @@ export default function DesignLightboxModal({
             e.stopPropagation();
             handlePrev();
           }}
-          className="absolute left-1 sm:left-4 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-neutral-900/70 hover:bg-white text-neutral-200 hover:text-neutral-950 border border-white/15 backdrop-blur-xl flex items-center justify-center active:scale-95 transition-all duration-200 shadow-xl"
+          className="absolute left-1 sm:left-4 z-50 w-10 h-10 bg-white hover:bg-[#2E5BFF] hover:text-white text-[#1C1B19] border-2 border-[#1C1B19] shadow-[3px_3px_0px_0px_#1C1B19] flex items-center justify-center active:translate-x-[1px] active:translate-y-[1px] transition-all"
           aria-label="Karya Sebelumnya"
         >
           <HiChevronLeft className="w-5 h-5" />
         </button>
 
-        {/* Artwork Image (Native 9:16 or 4:5 ratio without crop) */}
+        {/* Artwork Image in Sharp Pixel Frame */}
         <img
           src={currentItem.img}
           alt={currentItem.title}
-          className="max-h-[62vh] sm:max-h-[68vh] w-auto max-w-[88vw] sm:max-w-[80vw] object-contain rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.85)] border border-white/[0.08] select-none transition-all duration-300 animate-modal-in"
+          className="max-h-[60vh] sm:max-h-[66vh] w-auto max-w-[86vw] sm:max-w-[78vw] object-contain border-2 border-[#1C1B19] shadow-[6px_6px_0px_0px_#1C1B19] bg-white select-none transition-all duration-200 animate-modal-in"
         />
 
         {/* Right Arrow Button */}
@@ -181,24 +180,24 @@ export default function DesignLightboxModal({
             e.stopPropagation();
             handleNext();
           }}
-          className="absolute right-1 sm:right-4 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-neutral-900/70 hover:bg-white text-neutral-200 hover:text-neutral-950 border border-white/15 backdrop-blur-xl flex items-center justify-center active:scale-95 transition-all duration-200 shadow-xl"
+          className="absolute right-1 sm:right-4 z-50 w-10 h-10 bg-white hover:bg-[#2E5BFF] hover:text-white text-[#1C1B19] border-2 border-[#1C1B19] shadow-[3px_3px_0px_0px_#1C1B19] flex items-center justify-center active:translate-x-[1px] active:translate-y-[1px] transition-all"
           aria-label="Karya Berikutnya"
         >
           <HiChevronRight className="w-5 h-5" />
         </button>
       </div>
 
-      {/* ================= MINIMALIST BOTTOM CAPTION CARD ================= */}
+      {/* ================= PIXEL BOTTOM CAPTION CARD ================= */}
       <div
-        className="w-full max-w-xl mx-auto bg-neutral-900/80 backdrop-blur-2xl border border-white/[0.12] rounded-2xl px-5 py-3.5 sm:px-6 sm:py-4 text-center shadow-[0_8px_32px_rgba(0,0,0,0.6)] z-50 animate-modal-in"
+        className="w-full max-w-xl mx-auto bg-[#FFFFFF] border-2 border-[#1C1B19] shadow-[4px_4px_0px_0px_#1C1B19] px-4 py-3 text-center z-50 animate-modal-in"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed font-normal mb-2">
+        <p className="font-sans text-[#1C1B19] text-xs sm:text-sm leading-relaxed font-normal mb-2">
           {currentItem.description}
         </p>
-        <div className="flex items-center justify-center gap-2.5 text-[11px] text-neutral-400 font-mono tracking-wider">
-          <span>0{currentIndex + 1} / 0{total}</span>
-          <span className="text-neutral-600">•</span>
+        <div className="flex items-center justify-center gap-2.5 font-mono text-[11px] font-bold text-[#5E5C56]">
+          <span className="text-[#2E5BFF]">KARYA 0{currentIndex + 1} / 0{total}</span>
+          <span>•</span>
           <span>{aspectRatioText}</span>
         </div>
       </div>

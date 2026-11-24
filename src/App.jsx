@@ -7,6 +7,7 @@ import WebProjectsSection from './components/sections/WebProjectsSection';
 import DesignMasonrySection from './components/sections/DesignMasonrySection';
 import ExperienceSection from './components/sections/ExperienceSection';
 import ContactSection from './components/sections/ContactSection';
+import { LenisProvider } from './context/LenisContext';
 
 export default function App() {
   // Global smooth scroll reveal for desktop, tablet, and mobile windows
@@ -33,22 +34,24 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] text-[#1A1A1A] flex flex-col font-sans selection:bg-[#4A6B82]/15 selection:text-[#1A1A1A]">
-      {/* Floating Navbar */}
-      <Navbar />
+    <LenisProvider>
+      <div className="min-h-screen bg-[#F7F6F2] text-[#1C1B19] flex flex-col font-sans selection:bg-[#2E5BFF]/20 selection:text-[#1C1B19]">
+        {/* Floating Navbar */}
+        <Navbar />
 
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        <HeroSection />
-        <AboutBentoSection />
-        <WebProjectsSection />
-        <DesignMasonrySection />
-        <ExperienceSection />
-        <ContactSection />
-      </main>
+        {/* Main Content Sections */}
+        <main className="flex-1">
+          <HeroSection />
+          <AboutBentoSection />
+          <WebProjectsSection />
+          <DesignMasonrySection />
+          <ExperienceSection />
+          <ContactSection />
+        </main>
 
-      {/* Footer */}
-      <Footer />
-    </div>
+        {/* Footer */}
+        <Footer />
+      </div>
+    </LenisProvider>
   );
 }
